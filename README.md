@@ -1,0 +1,2 @@
+# insighton_small
+company_small_group_algorithm_problem_solution
