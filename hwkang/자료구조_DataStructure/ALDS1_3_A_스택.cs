@@ -24,7 +24,7 @@ namespace Temp_project_netframework
          */
         static void Main(string[] args)
         {
-            string[]  str_arr = InputData_Step(); //[ 우주의 갯수,우주마다 행성의 갯수]
+            string[]  str_arr = InputData_Step(); 
 
             OutputData(Process_Data_Step(str_arr));
         }
