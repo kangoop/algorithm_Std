@@ -17,3 +17,7 @@ https://judge.u-aizu.ac.jp/onlinejudge/
 
 백준 온라인 저지(BOJ)
 https://www.acmicpc.net/
+
+진행방향 v1.0
+
+해결 과정을 위한 정리 v1.0
