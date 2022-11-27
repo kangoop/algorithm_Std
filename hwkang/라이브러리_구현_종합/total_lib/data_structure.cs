@@ -304,9 +304,16 @@ namespace total_lib
             }
             else
             {
+                //tail.NextNode = newnode;
+                //newnode.PreNode = tail;
+                //tail.NextNode = null; 
+                //위 코드 일 경우 head=tail=newnode 의 위 코드에 의해서
+                //head.NextNode 도 null 이 된다.
+                //tail = newnode;
+
                 tail.NextNode = newnode;
                 newnode.PreNode = tail;
-                tail.NextNode = null;
+                newnode.NextNode = null;
                 tail = newnode;
             }
         }
