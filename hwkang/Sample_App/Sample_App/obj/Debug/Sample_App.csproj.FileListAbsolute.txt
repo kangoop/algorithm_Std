@@ -1,0 +1,8 @@
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\bin\Debug\Sample_App.exe.config
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\bin\Debug\Sample_App.exe
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\bin\Debug\Sample_App.pdb
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\obj\Debug\Sample_App.csproj.AssemblyReference.cache
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\obj\Debug\Sample_App.csproj.SuggestedBindingRedirects.cache
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\obj\Debug\Sample_App.csproj.CoreCompileInputs.cache
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\obj\Debug\Sample_App.exe
+E:\self_dev\인사이트온_스터디그룹_알고리즘문제풀기\insighton_small_local\hwkang\Sample_App\Sample_App\obj\Debug\Sample_App.pdb

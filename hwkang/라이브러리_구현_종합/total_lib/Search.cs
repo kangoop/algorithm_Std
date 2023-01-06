@@ -183,4 +183,81 @@ namespace total_lib
             return match_list.ToArray();
         }
     }
+
+    public class My_Dictionary
+    {
+
+        private readonly long Mod = 111_111_1;
+
+        private string[] value_arr = new string[111_111_1];
+
+        private int Char_To_Number(string code)
+        {
+            int result = 0;
+
+            byte[] bytes = Encoding.UTF8.GetBytes(code);
+
+            foreach (var item in bytes)
+            {
+                result += Convert.ToInt32(item);
+            }
+
+            return result;
+        }
+
+        public void Insert_Key(string value)
+        {
+            long convert_key = 0;
+            convert_key = Char_To_Number(value);
+
+            long hash;
+            for (int j = 0; ; j++)
+            {
+                hash = (h1(convert_key) + j * h2(convert_key)) % Mod;
+
+                if (value_arr[hash] == value)
+                {
+                    return;
+                }
+                else if (string.IsNullOrEmpty(value_arr[hash]))
+                {
+                    value_arr[hash] = value;
+                    return;
+                }
+            }
+
+        }
+
+        public string Find_Key(string value)
+        {
+            long convert_key = 0;
+            convert_key = Char_To_Number(value);
+
+            long hash;
+            for (int j = 0; ; j++)
+            {
+                hash = (h1(convert_key) + j * h2(convert_key)) % Mod;
+
+                if (value_arr[hash] == value)
+                {
+                    return "Y";
+                }
+                else if (string.IsNullOrEmpty(value_arr[hash]))
+                {
+                    return "N";
+                }
+            }
+
+        }
+
+        private long h1(long key)
+        {
+            return key % Mod;
+        }
+
+        private long h2(long key)
+        {
+            return 1 + (key % (Mod - 1));
+        }
+    }
 }

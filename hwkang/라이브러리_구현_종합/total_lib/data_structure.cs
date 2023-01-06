@@ -203,7 +203,8 @@ namespace total_lib
 
     }
 
-  
+
+
     /// <summary>
     /// 연결리스트 
     /// </summary>
@@ -267,6 +268,38 @@ namespace total_lib
 
         }
 
+        public bool HeadIsnull
+        {
+            get
+            {
+                if (head == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public object HeadItem
+        {
+            get
+            {
+                return head.Item;
+            }
+        }
+
+        public object TailItem
+        {
+            get
+            {
+                return tail.Item;
+            }
+        }
+
+
         /// <summary>
         /// 맨앞에 새로운 Node 추가 
         /// </summary>
@@ -292,6 +325,10 @@ namespace total_lib
 
         }
 
+        /// <summary>
+        /// 새로운 Node를 뒤에 붙이는 식으로 추가 
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(object value)
         {
             Node newnode = new Node { Item = value };
@@ -304,13 +341,6 @@ namespace total_lib
             }
             else
             {
-                //tail.NextNode = newnode;
-                //newnode.PreNode = tail;
-                //tail.NextNode = null; 
-                //위 코드 일 경우 head=tail=newnode 의 위 코드에 의해서
-                //head.NextNode 도 null 이 된다.
-                //tail = newnode;
-
                 tail.NextNode = newnode;
                 newnode.PreNode = tail;
                 newnode.NextNode = null;
@@ -408,6 +438,60 @@ namespace total_lib
             last = null;
         }
 
+        public bool Find(string item)
+        {
+            Node current = head;
+
+            if (current == null)
+            {
+                return false;
+            }
+
+            while (current != null)
+            {
+                if (current.Item.ToString() == item)
+                {
+                    return true;
+                }
+
+                if (current.NextNode == null)
+                {
+                    return false;
+                }
+
+                current = current.NextNode;
+            }
+
+            return false;
+        }
+
+        public bool LastFind(string item)
+        {
+            Node current = tail;
+
+            if (current == null)
+            {
+                return false;
+            }
+
+            while (current != null)
+            {
+                if (current.Item.ToString() == item)
+                {
+                    return true;
+                }
+
+                if (current.PreNode == null)
+                {
+                    return false;
+                }
+
+                current = current.PreNode;
+            }
+
+            return false;
+        }
+
 
         public string Print_Item(string seq)
         {
@@ -425,6 +509,30 @@ namespace total_lib
                 else
                 {
                     sb.Append($"{current.Item.ToString()}{seq}");
+                }
+
+                current = current.NextNode;
+            }
+
+            return sb.ToString();
+        }
+
+        public string Print_NewLine_Item()
+        {
+            //출력 시간 out 에 의해서 StringBuilder 형식으로 변경 하여 출력
+            StringBuilder sb = new StringBuilder();
+
+            Node current = head;
+            while (current != null)
+            {
+                if (current.NextNode == null)
+                {
+                    sb.Append($"{current.Item.ToString()}");
+
+                }
+                else
+                {
+                    sb.AppendLine($"{current.Item.ToString()}");
                 }
 
                 current = current.NextNode;
