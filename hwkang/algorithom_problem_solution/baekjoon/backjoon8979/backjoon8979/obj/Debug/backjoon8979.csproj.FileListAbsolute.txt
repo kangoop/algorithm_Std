@@ -1,0 +1,7 @@
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\bin\Debug\backjoon8979.exe.config
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\bin\Debug\backjoon8979.exe
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\bin\Debug\backjoon8979.pdb
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\obj\Debug\backjoon8979.csproj.AssemblyReference.cache
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\obj\Debug\backjoon8979.csproj.CoreCompileInputs.cache
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\obj\Debug\backjoon8979.exe
+E:\self_dev\baekjoon\backjoon8979\backjoon8979\obj\Debug\backjoon8979.pdb

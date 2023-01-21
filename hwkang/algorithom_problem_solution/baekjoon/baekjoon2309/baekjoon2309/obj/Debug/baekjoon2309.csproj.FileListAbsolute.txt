@@ -1,0 +1,7 @@
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\bin\Debug\baekjoon2309.exe.config
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\bin\Debug\baekjoon2309.exe
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\bin\Debug\baekjoon2309.pdb
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\obj\Debug\baekjoon2309.csproj.AssemblyReference.cache
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\obj\Debug\baekjoon2309.csproj.CoreCompileInputs.cache
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\obj\Debug\baekjoon2309.exe
+E:\self_dev\baekjoon\baekjoon2309\baekjoon2309\obj\Debug\baekjoon2309.pdb
