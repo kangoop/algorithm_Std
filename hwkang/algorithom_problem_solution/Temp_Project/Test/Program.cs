@@ -12,33 +12,41 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            string code = "qweasdzxc123";
-
-            byte[] byte_arr = Encoding.UTF8.GetBytes(code);
-
-            Console.WriteLine(byte_arr.Length);
+            int[] arr = { 1, 5, 7, 10, 21 };
+            for(int i = 0; i < arr.Length; i++)
+            {
+                test_func(arr, new int[i+1], 0, 0);
+            }
+            
         }
 
-        public static void Binaray_Code(object code,string code_str)
+        static void test_func(int[] arr,int[] list,int index,int depth)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            byte[] bytes;
-            using (MemoryStream ms = new MemoryStream())
+            if (depth == list.Length)
             {
-                bf.Serialize(ms, code);
-                bytes = ms.ToArray();
+                for(int i = 0; i < list.Length; i++)
+                {
+                    if (i < (list.Length-1))
+                    {
+                        Console.Write(list[i] + ",");
+                    }
+                    else
+                    {
+                        Console.Write(list[i]);
+                    }
+
+                }
+                Console.WriteLine();
+
+                return;
             }
-
-            for(int i = 0; i < bytes.Length; i++)
+            else
             {
-                Console.WriteLine($"{i + 1} : byte {bytes[i]}");
-            }
-
-            byte[] bytes_str = Encoding.UTF8.GetBytes(code_str);
-
-            foreach (var item in bytes_str)
-            {
-                Console.WriteLine($"byte : {item}");
+              for(int i = index; i < arr.Length; i++)
+                {
+                    list[depth] = arr[i];
+                    test_func(arr, list, i + 1, depth + 1);
+                }
             }
         }
 

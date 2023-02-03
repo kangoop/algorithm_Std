@@ -9,22 +9,25 @@
   },
   "packageFolders": {
     "C:\\Users\\pc1\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\self_dev\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
+      "projectUniqueName": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
       "projectName": "Temp_Proejct",
-      "projectPath": "E:\\self_dev\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
+      "projectPath": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
       "packagesPath": "C:\\Users\\pc1\\.nuget\\packages\\",
-      "outputPath": "E:\\self_dev\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\obj\\",
+      "outputPath": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\pc1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -33,6 +36,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -65,7 +69,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
       }
     }
   }
