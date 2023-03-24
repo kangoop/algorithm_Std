@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
+      "projectUniqueName": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
       "projectName": "Temp_Proejct",
-      "projectPath": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
+      "projectPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\Temp_Proejct.csproj",
       "packagesPath": "C:\\Users\\pc1\\.nuget\\packages\\",
-      "outputPath": "E:\\self_dev\\인사이트온_스터디그룹_알고리즘문제풀기\\insighton_small_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\obj\\",
+      "outputPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\Temp_Proejct\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
