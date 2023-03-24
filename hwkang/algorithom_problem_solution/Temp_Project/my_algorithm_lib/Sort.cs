@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace total_lib
+namespace my_algorithm_lib
 {
     public class Sort
     {

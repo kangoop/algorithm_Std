@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace total_lib
+namespace my_algorithm_lib
 {
     public class Linear_Search
     {

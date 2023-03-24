@@ -1,7 +1,6 @@
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\bin\Debug\netstandard2.0\my_algorithm_lib.deps.json
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\bin\Debug\netstandard2.0\my_algorithm_lib.dll
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\bin\Debug\netstandard2.0\my_algorithm_lib.pdb
-E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\obj\Debug\netstandard2.0\my_algorithm_lib.csproj.AssemblyReference.cache
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\obj\Debug\netstandard2.0\my_algorithm_lib.GeneratedMSBuildEditorConfig.editorconfig
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\obj\Debug\netstandard2.0\my_algorithm_lib.AssemblyInfoInputs.cache
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\my_algorithm_lib\obj\Debug\netstandard2.0\my_algorithm_lib.AssemblyInfo.cs
