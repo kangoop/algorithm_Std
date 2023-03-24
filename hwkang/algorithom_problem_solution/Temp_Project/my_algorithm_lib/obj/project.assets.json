@@ -187,11 +187,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\total_lib\\total_lib.csproj",
+      "projectUniqueName": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\my_algorithm_lib\\my_algorithm_lib.csproj",
       "projectName": "my_algorithm_lib",
-      "projectPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\total_lib\\total_lib.csproj",
+      "projectPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\my_algorithm_lib\\my_algorithm_lib.csproj",
       "packagesPath": "C:\\Users\\pc1\\.nuget\\packages\\",
-      "outputPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\total_lib\\obj\\",
+      "outputPath": "E:\\self_dev\\알고리즘문제풀기\\algorithm_local\\hwkang\\algorithom_problem_solution\\Temp_Project\\my_algorithm_lib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
