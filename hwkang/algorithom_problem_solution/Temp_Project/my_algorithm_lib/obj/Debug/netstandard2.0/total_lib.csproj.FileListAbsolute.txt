@@ -1,0 +1,10 @@
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\bin\Debug\netstandard2.0\total_lib.deps.json
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\bin\Debug\netstandard2.0\total_lib.dll
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\bin\Debug\netstandard2.0\total_lib.pdb
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.GeneratedMSBuildEditorConfig.editorconfig
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.AssemblyInfoInputs.cache
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.AssemblyInfo.cs
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.csproj.CoreCompileInputs.cache
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.dll
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.pdb
+E:\self_dev\algorithom_problem_solution\Temp_Project\total_lib\obj\Debug\netstandard2.0\total_lib.csproj.AssemblyReference.cache
