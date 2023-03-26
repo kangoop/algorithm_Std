@@ -24,110 +24,148 @@ namespace Temp_project_netframework
          */
         static void Main(string[] args)
         {
-            int arrsize = InputData_Step();
+            string[] InputData = InputData_Step();
 
-            int[] process_int_arr = InputData_Step2(arrsize);
+            string[] InputData_char = InputData_Step2();
 
+            string result =Process_Step(int.Parse(InputData[0]), InputData_char);
 
-            int arrsize2 = InputData_Step();
-
-            int[] process_int_arr2 = InputData_Step2(arrsize2);
-
-            string[] result_arr = Process_Step(process_int_arr, arrsize, process_int_arr2, arrsize2);
-
-            OutputData_Step(result_arr);
+            OutputData_Step(result);
         }
 
-        static int InputData_Step()
+        static string[] InputData_Step()
         {
-            int command_cnt = int.Parse(Console.ReadLine());
-
-            return command_cnt;
-        }
-
-        static int[] InputData_Step2(int size)
-        {
-            int[] int_arr = new int[size];           
-            string[] input_data = Console.ReadLine().Split();
-
-            for (int i = 0; i < size; i++)
-            {
-                int value = int.Parse(input_data[i]);
-
-                int_arr[i] = value;
-            }
-
-            return int_arr;
-        }
-
-      
-
-        static string[] Process_Step(int[] value_arr,int valuesize,int[] solve_arr, int solvesize)
-        {
-            string[] result = new string[solve_arr.Length];
-
-            for(int i = 0; i < valuesize; i++)
-            {
-               result = Exhaustive_Search(value_arr, new int[i + 1], 0, 0,new int[i+1],solve_arr,result);
-            }
-
-            for(int i = 0; i < result.Length; i++)
-            {
-                if (string.IsNullOrEmpty(result[i]))
-                {
-                    result[i] = "no";
-                }
-            }
+            string[] result = Console.ReadLine().Split(' ');
 
             return result;
         }
 
-
-        static string[] Exhaustive_Search(int[] value_arr,int[] solve_arr,int index,int depth,int[] use_chk,int[] find_list,string[] values)
+        static string[] InputData_Step2()
         {
-            if (depth == solve_arr.Length)
+            string[] result = Console.ReadLine().Split(' ');
+
+            return result;
+        }
+
+        static string Process_Step(int password_len,string[] char_list)
+        {
+            string[] sort_char_list = char_list.OrderBy(i=>i).ToArray();
+
+            //NEW_PASSWORD_MAKE(password_len, sort_char_list, "", 0);
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < password_len; i++)
             {
+                string[] param_char = new string[sort_char_list.Length - i];
+                Array.Copy(sort_char_list, i, param_char, 0, sort_char_list.Length - i);
+                bool[] check = new bool[sort_char_list.Length - i];
+                check[0] = true;
+                Password_Maker(password_len, 1, 0, sort_char_list[i], param_char, check, sb);
+            }
 
+            return sb.ToString();
+        }
 
-                int result = 0;
-                string find_chk = "no";
-                for (int i = 0; i < solve_arr.Length; i++)
+        static void NEW_PASSWORD_MAKE(int password_len,string[] select_char,string password,int index)
+        {
+            if (password.Length == password_len)
+            {
+                if (Password_Check(password))
                 {
-                    result += solve_arr[i]; 
+                    Console.WriteLine(password);
                 }
+                return;
+            }
+            
+            if(index >= select_char.Length)
+            {
+                return;
+            }
 
-                for (int i = 0; i < find_list.Length; i++)
+            NEW_PASSWORD_MAKE(password_len, select_char, password + select_char[index], index + 1);
+            NEW_PASSWORD_MAKE(password_len, select_char, password, index + 1);
+        }
+
+        static bool Password_Check(string password)
+        {
+            int vowel = 0;
+            int consonant = 0;
+
+            foreach(var item in password)
+            {
+                if (item == 'a' || item == 'e' || item == 'i' || item == 'o' || item == 'u')
                 {
-                    if (result == find_list[i])
+                    vowel++;
+                }
+                else
+                {
+                    consonant++;
+                }
+            }
+
+            return vowel >= 1 && consonant >= 2;
+        }
+
+        static StringBuilder Password_Maker(int max_level, int current_level,int before_index, string password_value, string[] select_char_list,bool[] check,StringBuilder sb)
+        {
+            if (max_level == password_value.Length)
+            {
+                int vowel = 0;
+                int consonant = 0;
+
+                foreach(var item in password_value)
+                {
+                    if (item == 'a' || item == 'e' || item == 'i' || item == 'o' || item == 'u')
                     {
-                        find_chk = "yes";
-                        values[i] = find_chk;
+                        vowel++;
+                    }
+                    else
+                    {
+                        consonant++;
                     }
                 }
 
-                return values;
+                if(vowel>=1 && consonant >= 2)
+                {
+                    sb.AppendLine(password_value);
+                }
+
+                //if (password_value.IndexOfAny(new char[] { 'a', 'e', 'i', 'o', 'u' }) > -1)
+                //{
+                //    if (password_value.Replace("a", "").Replace("e", "").Replace("i", "").Replace("o", "").Replace("u", "").Length >= 2)
+                //    {
+                //        sb.AppendLine(password_value);
+                //    }
+                //}
+            }else if (password_value.Length > max_level)
+            {
+                return sb;
             }
             else
             {
-                for(int i = index; i < value_arr.Length; i++)
+                for(int i = current_level; i < select_char_list.Length; i++)
                 {
-                    solve_arr[depth] = value_arr[i];
-                    use_chk[depth] = i;
-                    values = Exhaustive_Search(value_arr, solve_arr, i + 1, depth + 1,use_chk,find_list,values);
+                    if (!check[i])
+                    {
+                        check[i] = true;
+                        if(before_index <= i) // 정렬된 가능성 있는 암호 
+                        {
+                            Password_Maker(max_level, current_level + 1, i, password_value + select_char_list[i], select_char_list, check, sb);
+                        }                                                  
+                        check[i] = false;
+                    }
                 }
 
-                return values;
-                
             }
+
+            return sb;
         }
+      
 
-
-        static void OutputData_Step(string[] arr)
+        static void OutputData_Step(string result)
         {
-            for(int i = 0; i < arr.Length; i++)
-            {
-                Console.WriteLine(arr[i]);
-            }
+            Console.Write(result);
         }
 
 

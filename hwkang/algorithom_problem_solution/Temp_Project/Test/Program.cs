@@ -12,12 +12,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            int[] arr = { 1, 5, 7, 10, 21 };
-            for(int i = 0; i < arr.Length; i++)
-            {
-                test_func(arr, new int[i+1], 0, 0);
-            }
-            
+            Console.WriteLine("bcz".IndexOfAny(new char[] { 'a', 'e', 'i', 'o', 'u' }));
         }
 
         static void test_func(int[] arr,int[] list,int index,int depth)
