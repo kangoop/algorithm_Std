@@ -146,7 +146,7 @@ namespace my_algorithm_lib
 
         #endregion
 
-        #region Fibonacci_Number
+        #region Fibonacci_Number 피보나치 수
 
         public string Fibonacci_number_Process_Step(int cnt)
         {
@@ -179,7 +179,7 @@ namespace my_algorithm_lib
         }
         #endregion
 
-        #region Factorial
+        #region Factorial 팩토리얼
 
         public string Factorial_Process_Step(int cnt)
         {

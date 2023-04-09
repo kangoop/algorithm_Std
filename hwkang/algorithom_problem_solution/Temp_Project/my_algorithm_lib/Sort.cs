@@ -148,5 +148,83 @@ namespace my_algorithm_lib
             //return int_arr;
         }
 
+        #region MergeSort
+
+
+        /// <summary>
+        /// 분할 -> 정렬 -> 결합 , 안정적 정렬 
+        /// </summary>
+        /// <param name="data">입력데이터</param>
+        /// <param name="size">입력데이터크기</param>
+        /// <param name="left_idx">start 인덱스</param>
+        /// <param name="right_idx">end 인덱스</param>
+        /// <param name="sort_cnt">정렬 카운트</param>
+        /// <param name="n1">임시데이터 사이즈 Left</param>
+        /// <param name="n2">임시데이터 사이즈 Right</param>
+        /// <returns></returns>
+        public int MergeSort(int[] data, int size, int left_idx, int right_idx, int sort_cnt, int[] n1, int[] n2)
+        {
+            int cnt = sort_cnt;
+            if ((left_idx + 1) < right_idx)
+            {
+
+                int mid = (left_idx + right_idx) / 2;
+                int sort_cnt_1 = MergeSort(data, size, left_idx, mid, sort_cnt, n1, n2);
+                cnt += sort_cnt_1;
+                int sort_cnt_2 = MergeSort(data, size, mid, right_idx, sort_cnt, n1, n2);
+                cnt += sort_cnt_2;
+                int sort_cnt_3 = Merge(data, size, left_idx, mid, right_idx, n1, n2);
+                cnt += sort_cnt_3;
+
+            }
+
+            return cnt;
+        }
+
+        public int Merge(int[] data, int size, int left_idx, int mid_idx, int right_idx, int[] n1_arr, int[] n2_arr)
+        {
+            int cnt = 0;
+
+            int n1 = mid_idx - left_idx;
+            int n2 = right_idx - mid_idx;
+
+            int i = 0;
+            for (i = 0; i < n1; i++)
+            {
+                n1_arr[i] = data[left_idx + i];
+            }
+
+            for (i = 0; i < n2; i++)
+            {
+                n2_arr[i] = data[mid_idx + i];
+            }
+
+
+            n1_arr[n1] = int.MaxValue;
+            n2_arr[n2] = int.MaxValue;
+
+            i = 0;
+            int j = 0;
+
+            for (int k = left_idx; k < (right_idx); k++)
+            {
+                cnt++;
+                if (n1_arr[i] <= n2_arr[j])
+                {
+                    data[k] = n1_arr[i];
+                    i = i + 1;
+                }
+                else
+                {
+                    data[k] = n2_arr[j];
+                    j = j + 1;
+                }
+            }
+
+            return cnt;
+        }
+
+        #endregion
+
     }
 }

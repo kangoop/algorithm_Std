@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Temp_project_netframework
 {
@@ -22,150 +17,112 @@ namespace Temp_project_netframework
          * 
          * 
          */
+
         static void Main(string[] args)
         {
-            string[] InputData = InputData_Step();
+            int InputData = InputData_Step();
 
-            string[] InputData_char = InputData_Step2();
+            int[] InputData_int = InputData_Step2(InputData);
 
-            string result =Process_Step(int.Parse(InputData[0]), InputData_char);
 
-            OutputData_Step(result);
+            int idx  = Partition(InputData_int, 0, InputData);
+
+            OutputData_Step(InputData_int,idx);
         }
 
-        static string[] InputData_Step()
+        static int InputData_Step()
+        {
+            string input = Console.ReadLine();
+
+            return int.Parse(input);
+        }
+
+        static int[] InputData_Step2(int cnt)
         {
             string[] result = Console.ReadLine().Split(' ');
 
-            return result;
-        }
+            int[] data_cnt = new int[cnt];
 
-        static string[] InputData_Step2()
-        {
-            string[] result = Console.ReadLine().Split(' ');
-
-            return result;
-        }
-
-        static string Process_Step(int password_len,string[] char_list)
-        {
-            string[] sort_char_list = char_list.OrderBy(i=>i).ToArray();
-
-            //NEW_PASSWORD_MAKE(password_len, sort_char_list, "", 0);
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < password_len; i++)
+            for(int i=0;i< result.Length;i++)
             {
-                string[] param_char = new string[sort_char_list.Length - i];
-                Array.Copy(sort_char_list, i, param_char, 0, sort_char_list.Length - i);
-                bool[] check = new bool[sort_char_list.Length - i];
-                check[0] = true;
-                Password_Maker(password_len, 1, 0, sort_char_list[i], param_char, check, sb);
+                data_cnt[i] = int.Parse(result[i]);
+
             }
 
-            return sb.ToString();
+            return data_cnt;
         }
 
-        static void NEW_PASSWORD_MAKE(int password_len,string[] select_char,string password,int index)
+        static int Partition(int[] data,int left_idx ,int right_idx)
         {
-            if (password.Length == password_len)
+            int target = data[right_idx-1];
+            int i= left_idx-1;
+
+            for(int j = left_idx; j < right_idx; j++)
             {
-                if (Password_Check(password))
+                if (data[j] <= target)
                 {
-                    Console.WriteLine(password);
-                }
-                return;
-            }
-            
-            if(index >= select_char.Length)
-            {
-                return;
-            }
+                    i = i + 1;
 
-            NEW_PASSWORD_MAKE(password_len, select_char, password + select_char[index], index + 1);
-            NEW_PASSWORD_MAKE(password_len, select_char, password, index + 1);
-        }
+                    Swap(data,i ,j);
 
-        static bool Password_Check(string password)
-        {
-            int vowel = 0;
-            int consonant = 0;
-
-            foreach(var item in password)
-            {
-                if (item == 'a' || item == 'e' || item == 'i' || item == 'o' || item == 'u')
-                {
-                    vowel++;
                 }
                 else
                 {
-                    consonant++;
-                }
-            }
-
-            return vowel >= 1 && consonant >= 2;
-        }
-
-        static StringBuilder Password_Maker(int max_level, int current_level,int before_index, string password_value, string[] select_char_list,bool[] check,StringBuilder sb)
-        {
-            if (max_level == password_value.Length)
-            {
-                int vowel = 0;
-                int consonant = 0;
-
-                foreach(var item in password_value)
-                {
-                    if (item == 'a' || item == 'e' || item == 'i' || item == 'o' || item == 'u')
+                    
+                    int index = i + 1;
+                    if (data[index] > target)
                     {
-                        vowel++;
+
                     }
                     else
                     {
-                        consonant++;
+                        Swap(data, index, right_idx - 1);
                     }
                 }
-
-                if(vowel>=1 && consonant >= 2)
-                {
-                    sb.AppendLine(password_value);
-                }
-
-                //if (password_value.IndexOfAny(new char[] { 'a', 'e', 'i', 'o', 'u' }) > -1)
-                //{
-                //    if (password_value.Replace("a", "").Replace("e", "").Replace("i", "").Replace("o", "").Replace("u", "").Length >= 2)
-                //    {
-                //        sb.AppendLine(password_value);
-                //    }
-                //}
-            }else if (password_value.Length > max_level)
-            {
-                return sb;
-            }
-            else
-            {
-                for(int i = current_level; i < select_char_list.Length; i++)
-                {
-                    if (!check[i])
-                    {
-                        check[i] = true;
-                        if(before_index <= i) // 정렬된 가능성 있는 암호 
-                        {
-                            Password_Maker(max_level, current_level + 1, i, password_value + select_char_list[i], select_char_list, check, sb);
-                        }                                                  
-                        check[i] = false;
-                    }
-                }
-
             }
 
-            return sb;
+            return i;
+            
         }
-      
 
-        static void OutputData_Step(string result)
+        static void Swap(int[] data, int  a,int b)
         {
-            Console.Write(result);
+            int temp = data[a];
+            data[a] = data[b];
+            data[b] = temp;
+        }
+     
+        static void OutputData_Step(int[] data,int idx)
+        {
+            for(int i = 0; i < data.Length; i++)
+            {
+                if (i == idx)
+                {
+                    if (i == data.Length - 1)
+                    {
+                        Console.WriteLine("[" + data[i] + "]");
+                    }
+                    else
+                    {
+                        Console.Write("[" + data[i] + "] ");
+                    }
+                   
+                }
+                else
+                {
+                    if (i == data.Length - 1)
+                    {
+                        Console.WriteLine(data[i]);
+                    }
+                    else
+                    {
+                        Console.Write(data[i] + " ");
+                    }
+
+                }
+
+            }
+            
         }
 
 
