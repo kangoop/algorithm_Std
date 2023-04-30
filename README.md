@@ -1,5 +1,5 @@
-# insighton_small
-company_small_group_algorithm_problem_solution
+# alogrithm_Std
+algorithm_problem_solution
 
 
 경로
@@ -21,3 +21,32 @@ https://www.acmicpc.net/
 진행방향 v1.0
 
 해결 과정을 위한 정리 v1.0
+
+Kang
+미해결 목록
+-------------------------
+3장	간단한정려
+	 
+3.6 	셸 정렬
+
+4장	자료구조
+
+5장	탐색
+
+6장	재귀와 분할정복
+
+7장 	고급정렬
+
+백준
+3장
+
+4장
+
+5장
+
+6장
+1759
+2447
+1074 
+
+
