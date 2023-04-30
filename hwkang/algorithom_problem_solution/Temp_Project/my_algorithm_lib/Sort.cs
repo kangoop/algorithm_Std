@@ -226,5 +226,100 @@ namespace my_algorithm_lib
 
         #endregion
 
+        #region parititon 
+
+        /// <summary>
+        /// right_idx 의 값을 기준으로 해당 값보다 낮은 것은 left 로 높은것은 right 옮기는것
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="left_idx"></param>
+        /// <param name="right_idx"></param>
+        /// <returns></returns>
+        public int Partition(int[] data, int left_idx, int right_idx)
+        {
+            int target = data[right_idx - 1];
+            int i = left_idx - 1;
+
+            for (int j = left_idx; j < right_idx; j++)
+            {
+                if (data[j] <= target)
+                {
+                    i = i + 1;
+
+                    Swap(data, i, j);
+
+                }
+                else
+                {
+
+                    int index = i + 1;
+                    if (data[index] > target)
+                    {
+
+                    }
+                    else
+                    {
+                        Swap(data, index, right_idx - 1);
+                    }
+                }
+            }
+
+            return i;
+
+        }
+
+        public void Swap(int[] data, int a, int b)
+        {
+            int temp = data[a];
+            data[a] = data[b];
+            data[b] = temp;
+        }
+
+
+        #endregion
+
+
+
+        #region Quck Sort
+
+        public void QuickSort(string[] input, int left, int right)
+        {
+            if (left < right)
+            {
+                int q = Partition(input, left, right);
+                QuickSort(input, left, q - 1);
+                QuickSort(input, q + 1, right);
+            }
+        }
+
+        public int Partition(string[] data, int left_idx, int right_idx)
+        {
+            int target = int.Parse(data[right_idx].Split(' ')[1]);
+            int i = left_idx - 1;
+
+            for (int j = left_idx; j < right_idx; j++)
+            {
+                if (int.Parse(data[j].Split(' ')[1]) <= target)
+                {
+                    i = i + 1;
+                    Swap(data, i, j);
+                }
+            }
+            Swap(data, i + 1, right_idx);
+
+            return i + 1;
+        }
+
+
+
+        public void Swap(string[] data, int a, int b)
+        {
+            string temp = data[a];
+            data[a] = data[b];
+            data[b] = temp;
+        }
+
+        #endregion
+
     }
 }

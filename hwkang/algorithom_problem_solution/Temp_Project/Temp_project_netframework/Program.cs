@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Principal;
+using System.Text;
 
 namespace Temp_project_netframework
 {
@@ -20,14 +22,13 @@ namespace Temp_project_netframework
 
         static void Main(string[] args)
         {
-            int InputData = InputData_Step();
+            int InputData_int = InputData_Step();
 
-            int[] InputData_int = InputData_Step2(InputData);
+            int[] InputData = InputData_Step2(InputData_int);
 
+            int[] output_data = Counting_Sort(InputData, new int[InputData.Length], InputData.Length);
 
-            int idx  = Partition(InputData_int, 0, InputData);
-
-            OutputData_Step(InputData_int,idx);
+            OutputData_Step(output_data);
         }
 
         static int InputData_Step()
@@ -39,90 +40,59 @@ namespace Temp_project_netframework
 
         static int[] InputData_Step2(int cnt)
         {
-            string[] result = Console.ReadLine().Split(' ');
+            string[] input = Console.ReadLine().Split(' ');
 
-            int[] data_cnt = new int[cnt];
-
-            for(int i=0;i< result.Length;i++)
+            int[] output = new int[input.Length];
+            for(int i=0; i < cnt; i++)
             {
-                data_cnt[i] = int.Parse(result[i]);
-
+                output[i] = int.Parse(input[i]); 
             }
 
-            return data_cnt;
+            return output;
         }
 
-        static int Partition(int[] data,int left_idx ,int right_idx)
+        static int[] Counting_Sort(int[] data_arr, int[] output_arr,int maxsize)
         {
-            int target = data[right_idx-1];
-            int i= left_idx-1;
+            int[] count_arr = new int[10_001];
 
-            for(int j = left_idx; j < right_idx; j++)
+            for(int i = 0; i < maxsize; i++)
             {
-                if (data[j] <= target)
-                {
-                    i = i + 1;
+                int value = data_arr[i];
 
-                    Swap(data,i ,j);
+                count_arr[value]++;
+            }
 
+
+            for(int i = 1; i <= count_arr.Length-1; i++)
+            {
+                count_arr[i] = count_arr[i] + count_arr[i - 1];
+            }
+
+            for(int j= maxsize - 1; j >= 0; j--)
+            {
+                var item = data_arr[j];
+                var count_idx = count_arr[item];
+                output_arr[count_idx - 1] = item;
+                count_arr[item]--;
+            }
+
+            return output_arr;
+        }
+
+
+
+        static void OutputData_Step(int[] output)
+        {
+            for (int i = 0; i < output.Length; i++)
+            {
+                if (i == (output.Length - 1)){
+                    Console.WriteLine(output[i]);
                 }
                 else
                 {
-                    
-                    int index = i + 1;
-                    if (data[index] > target)
-                    {
-
-                    }
-                    else
-                    {
-                        Swap(data, index, right_idx - 1);
-                    }
+                    Console.Write(output[i]+" ");
                 }
             }
-
-            return i;
-            
-        }
-
-        static void Swap(int[] data, int  a,int b)
-        {
-            int temp = data[a];
-            data[a] = data[b];
-            data[b] = temp;
-        }
-     
-        static void OutputData_Step(int[] data,int idx)
-        {
-            for(int i = 0; i < data.Length; i++)
-            {
-                if (i == idx)
-                {
-                    if (i == data.Length - 1)
-                    {
-                        Console.WriteLine("[" + data[i] + "]");
-                    }
-                    else
-                    {
-                        Console.Write("[" + data[i] + "] ");
-                    }
-                   
-                }
-                else
-                {
-                    if (i == data.Length - 1)
-                    {
-                        Console.WriteLine(data[i]);
-                    }
-                    else
-                    {
-                        Console.Write(data[i] + " ");
-                    }
-
-                }
-
-            }
-            
         }
 
 
