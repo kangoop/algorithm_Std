@@ -200,8 +200,9 @@ namespace my_algorithm_lib
             }
 
 
-            n1_arr[n1] = int.MaxValue;
-            n2_arr[n2] = int.MaxValue;
+            n1_arr[n1] = int.MaxValue; //리터럴 값
+            n2_arr[n2] = int.MaxValue; 
+            //리터럴 값
 
             i = 0;
             int j = 0;
@@ -237,7 +238,7 @@ namespace my_algorithm_lib
         /// <returns></returns>
         public int Partition(int[] data, int left_idx, int right_idx)
         {
-            int target = data[right_idx - 1];
+            int target = data[right_idx - 1]; //배열의 마지막요소값
             int i = left_idx - 1;
 
             for (int j = left_idx; j < right_idx; j++)
@@ -320,6 +321,50 @@ namespace my_algorithm_lib
         }
 
         #endregion
+
+
+        #region Count Sort
+
+        //조건 정렬데이터의 요소 가 0 이상 and 정렬데이터의 요소의 최대 크키 에 비례하는 저장 공간 
+
+        /// <summary>
+        /// 정렬데이터 ==> data_arr , 출력데이터 output_arr
+        /// </summary>
+        /// <param name="data_arr"></param>
+        /// <param name="output_arr"></param>
+        /// <param name="maxsize"></param>
+        /// <returns></returns>
+        public int[] Counting_Sort(int[] data_arr, int[] output_arr, int maxsize)
+        {
+            int[] count_arr = new int[10_001];
+
+            for (int i = 0; i < maxsize; i++)
+            {
+                int value = data_arr[i];
+
+                count_arr[value]++;
+            }
+
+            for (int i = 1; i <= count_arr.Length - 1; i++)
+            {
+                count_arr[i] = count_arr[i] + count_arr[i - 1];
+            }   //누적 합계 계산
+
+
+            
+            for (int j = maxsize - 1; j >= 0; j--)
+            {
+                var item = data_arr[j];
+                var count_idx = count_arr[item];
+                output_arr[count_idx - 1] = item;
+                count_arr[item]--; //중복되는 요소의 위치 떄문에 감소
+            }
+
+            return output_arr;
+        }
+
+        #endregion
+
 
     }
 }

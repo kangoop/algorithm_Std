@@ -16,8 +16,6 @@ namespace Temp_project_netframework
          * 
          * 만약 각 단계마다 끝나지 않는 다면 
          * StepXXX 을 붙여서 진행 하도록 한다 EX) Step1 -> Step2 ... 이런식으로 
-         * 
-         * 
          */
 
         static void Main(string[] args)
@@ -83,16 +81,18 @@ namespace Temp_project_netframework
 
         static void OutputData_Step(int[] output)
         {
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < output.Length; i++)
             {
                 if (i == (output.Length - 1)){
-                    Console.WriteLine(output[i]);
+                    sb.Append(output[i]);                   
                 }
                 else
                 {
-                    Console.Write(output[i]+" ");
+                    sb.Append(output[i]+" ");
                 }
             }
+            Console.WriteLine(sb.ToString());
         }
 
 
