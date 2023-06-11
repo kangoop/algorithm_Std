@@ -24,7 +24,7 @@ namespace Temp_project_netframework
         {
             int node_cnt = InputData_Step();
 
-            MyNode[] mynodes = new MyNode[node_cnt];
+            MyNode_Binary[] mynodes = new MyNode_Binary[node_cnt];
 
             Process_Step(node_cnt,mynodes);
 
@@ -38,111 +38,203 @@ namespace Temp_project_netframework
             return int.Parse(node_cnt);
         }
 
-
-        static void Process_Step(int node_cnt, MyNode[] mynodes)
+        static void Process_Step(int node_cnt, MyNode_Binary[] mynodes)
         {
-            for (int i = 0; i < node_cnt; i++)
+            for(int i = 0; i < node_cnt; i++)
             {
                 string[] node_info = Console.ReadLine().Replace(" ", ",").Split(',');
 
-                string node_id = node_info[0];
-               
-                if (mynodes[int.Parse(node_id)] == null)
+                string node_idx = node_info[0];
+
+                if (mynodes[int.Parse(node_idx)] == null)
                 {
-                    MyNode node = new MyNode();
-                    mynodes[int.Parse(node_id)] = node;
-                    mynodes[int.Parse(node_id)].value = node_id;
+                    MyNode_Binary node = new MyNode_Binary();
+                    mynodes[int.Parse(node_idx)] = node;
+                    mynodes[int.Parse(node_idx)].nodevalue = node_idx;
                 }
 
-                MyNode parentnode = mynodes[int.Parse(node_id)];
+                MyNode_Binary parentnode = mynodes[int.Parse(node_idx)];
 
-
-                for (int j = 2; j < node_info.Length; j++) // childnode 추가 
+                for(int j = 1; j < node_info.Length; j++)
                 {
-                    string childnode_id = node_info[j];
+                    string node_value_idx = node_info[j];
 
-                    
-                    if (mynodes[int.Parse(childnode_id)] == null)
+                    if (node_value_idx != "-1")
                     {
-                        MyNode childnode = new MyNode();
+                        MyNode_Binary node;
+                        if (mynodes[int.Parse(node_value_idx)] != null)
+                        {
+                            node = mynodes[int.Parse(node_value_idx)];
+                            node.AddparentNode(parentnode);
+                            node.nodevalue = node_value_idx;
+                        }
+                        else
+                        {
+                            node = new MyNode_Binary();
+                            node.AddparentNode(parentnode);
+                            mynodes[int.Parse(node_value_idx)] = node;
+                            node.nodevalue = node_value_idx;
+                        }
 
-                        mynodes[int.Parse(childnode_id)] = childnode;
-
-                        childnode.value  = childnode_id;
-
-                        childnode.AddParentnode(parentnode);
-
-                        parentnode.Addchildnode(childnode);
-
+                        if (j == 1) //left
+                        {
+                            parentnode.AddchildNode("left", node);
+                        }
+                        else if(j == 2) //right
+                        {
+                            parentnode.AddchildNode("right", node);
+                        }
                     }
-                    else
+                    else // node_value_idx == -1
                     {
-                        MyNode childnode = mynodes[int.Parse(childnode_id)];
-                        childnode.AddParentnode(parentnode);
-                        parentnode.Addchildnode(childnode);
 
                     }
                 }
             }
         }
 
-
-        static void OutputData_Step(MyNode[] mynodes)
+        static void OutputData_Step(MyNode_Binary[] mynodes)
         {
             foreach (var node in mynodes)
             {
-                Console.WriteLine($"node {node.value}: parent = {node.GetParentNodeId()}, depth = {node.NodeDepth()}, {node.Nodetype()}, {node.Childnode()}");
+                Console.WriteLine($"node {node.nodevalue}: parent = {node.ParentNodeValue()}, sibling = {node.SiblingValue()}, degree = {node.DegreeValue()}, depth = {node.DepthValue()}, height = {node.HeightValue()}, {node.NodeType()}");          
             }
+            
         }
-
-
     }
 
-    public class MyNode
+    public class MyNode_Binary 
     {
-        MyNode parentnode;
-        List<MyNode> childnodes = new List<MyNode>();
-        //MyNode[] childnodes = new MyNode[0] { };
-        public string value { get; set; }// node id 
+        MyNode_Binary parentnode;
+        MyNode_Binary left;
+        MyNode_Binary right;
+        private string nodelocation { get; set; }
+        public string nodevalue { get; set; }
 
-        public MyNode()
+
+        public MyNode_Binary()
         {
             
         }
 
-        public string GetParentNodeId()
+        public string ParentNodeValue()
         {
-            return parentnode == null ? "-1" : parentnode.value;
-        }
-
-        public void AddParentnode(MyNode node)
-        {
-            if(value == node.value)
+            if (this.parentnode == null)
             {
-                parentnode = null;
+                return "-1";
             }
             else
             {
-                parentnode = node;
+                return this.parentnode.nodevalue;
             }
-            
         }
 
-
-        public void Addchildnode(MyNode childnode)
+        public string SiblingValue()
         {
-            childnodes.Add(childnode);
+            if(this.parentnode == null)
+            {
+                return "-1";
+            }
+
+
+            if (nodelocation == "left")
+            {
+                if(this.parentnode.right == null)
+                {
+                    return "-1";
+                }
+
+                return this.parentnode.right.nodevalue;
+            }
+            else if(nodelocation=="right") 
+            { //right
+                if (this.parentnode.left == null)
+                {
+                    return "-1";
+                }
+
+                return this.parentnode.left.nodevalue;
+            }
+
+            return "-1";
+        }
+
+        public string DegreeValue()
+        {
+            if(this.right != null && this.left != null)
+            {
+                return "2";
+            }
+            else if (this.right == null && this.left == null)
+            {
+                return "0";
+            }
+            else
+            {
+                return "1";
+            }
+        }
+
+        public string DepthValue()
+        {
+            int node_depth = 0;
+
+            node_depth = DepthFunc(this);
+
+            return node_depth.ToString();
+        }
+
+        private int DepthFunc(MyNode_Binary node)
+        {
+            int depth = 0;
+
+            if (node.parentnode != null)
+            {
+                depth = DepthFunc(node.parentnode);
+
+                depth++;
+            }
+
+            return depth;
+        }
+
+        public string HeightValue()
+        {
+            int node_height = 0;
+
+            node_height = HeightFunc(this);
+
+            return node_height.ToString();
 
         }
 
-
-        public string Nodetype()
+        private int HeightFunc(MyNode_Binary node)
         {
-            if (parentnode == null)
+            int left_height = 0;
+            int right_height = 0;
+
+            if (node.left != null)
+            {
+                left_height = HeightFunc(node.left);
+                left_height++;
+            }
+
+            if (node.right != null)
+            {
+                right_height = HeightFunc(node.right);
+                right_height++;
+            }
+
+            return left_height > right_height ? left_height : right_height;
+        }
+
+        public string NodeType()
+        {
+            if (this.parentnode == null)
             {
                 return "root";
             }
-            else if (childnodes ==null || childnodes.Count <= 0)
+            else if(this.left == null && this.right == null)
             {
                 return "leaf";
             }
@@ -152,59 +244,25 @@ namespace Temp_project_netframework
             }
         }
 
-        public string Childnode()
+        public void AddparentNode(MyNode_Binary node)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("[");
-            //string childnode = string.Empty;
-            //childnode = "[";
-
-
-            for (int i = 0; i < childnodes.Count; i++)
-            {
-                if (i < childnodes.Count - 1)
-                {
-                    sb.Append(childnodes[i].value + ", ");
-                    //childnode += childnodes[i].value + ", ";
-                }
-                else
-                {
-                    sb.Append(childnodes[i].value);
-                    //childnode += childnodes[i].value;
-                }
-            }
-
-            sb.Append("]");//childnode += "]";
-
-
-            return sb.ToString();
-
+            this.parentnode = node;
         }
 
-        public int NodeDepth()
+        public void AddchildNode(string node_location,MyNode_Binary childnode)
         {
-            int nodecnt = 0;
-
-            bool parentnodechk = true;
-
-            MyNode temp_node = parentnode;
-
-            while (parentnodechk)
+            switch (node_location)
             {
-
-                if (temp_node == null)
-                {
+                case "left":
+                    childnode.nodelocation = "left";
+                    left = childnode;
                     break;
-                }
-                else
-                {
-                    nodecnt++;
-                }
-
-                temp_node = temp_node.parentnode;
+                case "right":
+                    childnode.nodelocation = "right";
+                    right = childnode;
+                    break;
             }
-
-            return nodecnt;
         }
     }
+ 
 }

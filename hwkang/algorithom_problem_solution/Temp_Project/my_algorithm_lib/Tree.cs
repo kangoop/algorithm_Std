@@ -67,14 +67,14 @@ namespace my_algorithm_lib
 
                 string node_id = node_info[0];
 
-                if (mynodes[int.Parse(node_id)] == null)
+                if (mynodes[int.Parse(node_id)] == null) //생성되지 않은 노드라면 생성 
                 {
                     MyNode node = new MyNode();
                     mynodes[int.Parse(node_id)] = node;
                     mynodes[int.Parse(node_id)].value = node_id;
                 }
 
-                MyNode parentnode = mynodes[int.Parse(node_id)];
+                MyNode parentnode = mynodes[int.Parse(node_id)]; //첫번째 노드 이후는 자식노드들 
 
 
                 for (int j = 2; j < node_info.Length; j++) // childnode 추가 
