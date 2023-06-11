@@ -238,4 +238,280 @@ namespace my_algorithm_lib
         }
     }
     #endregion
+
+
+    #region Binary Tree
+    public class BinaryTree
+    {
+        /* EX CODE)
+Sample Input 1
+9
+0 1 4
+1 2 3
+2 -1 -1
+3 -1 -1
+4 5 8
+5 6 7
+6 -1 -1
+7 -1 -1
+8 -1 -1
+Sample Output 1
+node 0: parent = -1, sibling = -1, degree = 2, depth = 0, height = 3, root
+node 1: parent = 0, sibling = 4, degree = 2, depth = 1, height = 1, internal node
+node 2: parent = 1, sibling = 3, degree = 0, depth = 2, height = 0, leaf
+node 3: parent = 1, sibling = 2, degree = 0, depth = 2, height = 0, leaf
+node 4: parent = 0, sibling = 1, degree = 2, depth = 1, height = 2, internal node
+node 5: parent = 4, sibling = 8, degree = 2, depth = 2, height = 1, internal node
+node 6: parent = 5, sibling = 7, degree = 0, depth = 3, height = 0, leaf
+node 7: parent = 5, sibling = 6, degree = 0, depth = 3, height = 0, leaf
+node 8: parent = 4, sibling = 5, degree = 0, depth = 2, height = 0, leaf
+         */
+
+        static void Main(string[] args)
+        {
+            int node_cnt = InputData_Step();
+
+            MyNode_Binary[] mynodes = new MyNode_Binary[node_cnt];
+
+            Process_Step(node_cnt, mynodes);
+
+            OutputData_Step(mynodes);
+        }
+
+        static int InputData_Step()
+        {
+            string node_cnt = Console.ReadLine();
+
+            return int.Parse(node_cnt);
+        }
+
+        static void Process_Step(int node_cnt, MyNode_Binary[] mynodes)
+        {
+            for (int i = 0; i < node_cnt; i++)
+            {
+                string[] node_info = Console.ReadLine().Replace(" ", ",").Split(',');
+
+                string node_idx = node_info[0];
+
+                if (mynodes[int.Parse(node_idx)] == null)
+                {
+                    MyNode_Binary node = new MyNode_Binary();
+                    mynodes[int.Parse(node_idx)] = node;
+                    mynodes[int.Parse(node_idx)].nodevalue = node_idx;
+                }
+
+                MyNode_Binary parentnode = mynodes[int.Parse(node_idx)];
+
+                for (int j = 1; j < node_info.Length; j++)
+                {
+                    string node_value_idx = node_info[j];
+
+                    if (node_value_idx != "-1")
+                    {
+                        MyNode_Binary node;
+                        if (mynodes[int.Parse(node_value_idx)] != null)
+                        {
+                            node = mynodes[int.Parse(node_value_idx)];
+                            node.AddparentNode(parentnode);
+                            node.nodevalue = node_value_idx;
+                        }
+                        else
+                        {
+                            node = new MyNode_Binary();
+                            node.AddparentNode(parentnode);
+                            mynodes[int.Parse(node_value_idx)] = node;
+                            node.nodevalue = node_value_idx;
+                        }
+
+                        if (j == 1) //left
+                        {
+                            parentnode.AddchildNode("left", node);
+                        }
+                        else if (j == 2) //right
+                        {
+                            parentnode.AddchildNode("right", node);
+                        }
+                    }
+                    else // node_value_idx == -1
+                    {
+
+                    }
+                }
+            }
+        }
+
+        static void OutputData_Step(MyNode_Binary[] mynodes)
+        {
+            foreach (var node in mynodes)
+            {
+                Console.WriteLine($"node {node.nodevalue}: parent = {node.ParentNodeValue()}, sibling = {node.SiblingValue()}, degree = {node.DegreeValue()}, depth = {node.DepthValue()}, height = {node.HeightValue()}, {node.NodeType()}");
+            }
+
+        }
+    }
+
+    public class MyNode_Binary
+    {
+        MyNode_Binary parentnode;
+        MyNode_Binary left;
+        MyNode_Binary right;
+        private string nodelocation { get; set; } //현재 자신이 LEFT ,RIGHT 인지 나타낸다.
+        public string nodevalue { get; set; } //노드의 위치 
+
+
+        public MyNode_Binary()
+        {
+
+        }
+
+        public string ParentNodeValue()
+        {
+            if (this.parentnode == null)
+            {
+                return "-1";
+            }
+            else
+            {
+                return this.parentnode.nodevalue;
+            }
+        }
+
+        public string SiblingValue()
+        {
+            if (this.parentnode == null)
+            {
+                return "-1";
+            }
+
+
+            if (nodelocation == "left")
+            {
+                if (this.parentnode.right == null)
+                {
+                    return "-1";
+                }
+
+                return this.parentnode.right.nodevalue;
+            }
+            else if (nodelocation == "right")
+            { 
+                if (this.parentnode.left == null)
+                {
+                    return "-1";
+                }
+
+                return this.parentnode.left.nodevalue;
+            }
+
+            return "-1";
+        }
+
+        public string DegreeValue()
+        {
+            if (this.right != null && this.left != null)
+            {
+                return "2";
+            }
+            else if (this.right == null && this.left == null)
+            {
+                return "0";
+            }
+            else
+            {
+                return "1";
+            }
+        }
+
+        //재귀반복으로 변경
+        public string DepthValue()
+        {
+            int node_depth = 0;
+
+            node_depth = DepthFunc(this);
+
+            return node_depth.ToString();
+        }
+
+        private int DepthFunc(MyNode_Binary node)
+        {
+            int depth = 0;
+
+            if (node.parentnode != null)
+            {
+                depth = DepthFunc(node.parentnode);
+
+                depth++;
+            }
+
+            return depth;
+        }
+
+        //재귀반복으로 변경
+        public string HeightValue()
+        {
+            int node_height = 0;
+
+            node_height = HeightFunc(this);
+
+            return node_height.ToString();
+
+        }
+
+        private int HeightFunc(MyNode_Binary node)
+        {
+            int left_height = 0;
+            int right_height = 0;
+
+            if (node.left != null)
+            {
+                left_height = HeightFunc(node.left);
+                left_height++;
+            }
+
+            if (node.right != null)
+            {
+                right_height = HeightFunc(node.right);
+                right_height++;
+            }
+
+            return left_height > right_height ? left_height : right_height;
+        }
+
+        public string NodeType()
+        {
+            if (this.parentnode == null)
+            {
+                return "root";
+            }
+            else if (this.left == null && this.right == null)
+            {
+                return "leaf";
+            }
+            else
+            {
+                return "internal node";
+            }
+        }
+
+        public void AddparentNode(MyNode_Binary node)
+        {
+            this.parentnode = node;
+        }
+
+        public void AddchildNode(string node_location, MyNode_Binary childnode)
+        {
+            switch (node_location)
+            {
+                case "left":
+                    childnode.nodelocation = "left";
+                    left = childnode;
+                    break;
+                case "right":
+                    childnode.nodelocation = "right";
+                    right = childnode;
+                    break;
+            }
+        }
+    }
+    #endregion
 }
