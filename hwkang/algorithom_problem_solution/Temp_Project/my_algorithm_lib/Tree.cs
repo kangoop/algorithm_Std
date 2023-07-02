@@ -244,27 +244,49 @@ namespace my_algorithm_lib
     public class BinaryTree
     {
         /* EX CODE)
-Sample Input 1
-9
-0 1 4
-1 2 3
-2 -1 -1
-3 -1 -1
-4 5 8
-5 6 7
-6 -1 -1
-7 -1 -1
-8 -1 -1
-Sample Output 1
-node 0: parent = -1, sibling = -1, degree = 2, depth = 0, height = 3, root
-node 1: parent = 0, sibling = 4, degree = 2, depth = 1, height = 1, internal node
-node 2: parent = 1, sibling = 3, degree = 0, depth = 2, height = 0, leaf
-node 3: parent = 1, sibling = 2, degree = 0, depth = 2, height = 0, leaf
-node 4: parent = 0, sibling = 1, degree = 2, depth = 1, height = 2, internal node
-node 5: parent = 4, sibling = 8, degree = 2, depth = 2, height = 1, internal node
-node 6: parent = 5, sibling = 7, degree = 0, depth = 3, height = 0, leaf
-node 7: parent = 5, sibling = 6, degree = 0, depth = 3, height = 0, leaf
-node 8: parent = 4, sibling = 5, degree = 0, depth = 2, height = 0, leaf
+        Sample Input 1
+        9
+        0 1 4
+        1 2 3
+        2 -1 -1
+        3 -1 -1
+        4 5 8
+        5 6 7
+        6 -1 -1
+        7 -1 -1
+        8 -1 -1
+        Sample Output 1
+        node 0: parent = -1, sibling = -1, degree = 2, depth = 0, height = 3, root
+        node 1: parent = 0, sibling = 4, degree = 2, depth = 1, height = 1, internal node
+        node 2: parent = 1, sibling = 3, degree = 0, depth = 2, height = 0, leaf
+        node 3: parent = 1, sibling = 2, degree = 0, depth = 2, height = 0, leaf
+        node 4: parent = 0, sibling = 1, degree = 2, depth = 1, height = 2, internal node
+        node 5: parent = 4, sibling = 8, degree = 2, depth = 2, height = 1, internal node
+        node 6: parent = 5, sibling = 7, degree = 0, depth = 3, height = 0, leaf
+        node 7: parent = 5, sibling = 6, degree = 0, depth = 3, height = 0, leaf
+        node 8: parent = 4, sibling = 5, degree = 0, depth = 2, height = 0, leaf
+        */
+
+        /*tree 순회 추가
+         * Sample Input 1
+        9
+        0 1 4
+        1 2 3
+        2 -1 -1
+        3 -1 -1
+        4 5 8
+        5 6 7
+        6 -1 -1
+        7 -1 -1
+        8 -1 -1
+        Sample Output 1
+        Preorder
+         0 1 2 3 4 5 6 7 8
+        Inorder
+         2 1 3 0 6 5 7 4 8
+        Postorder
+         2 3 1 6 7 5 8 4 0
+         * 
          */
 
         static void Main(string[] args)
@@ -345,6 +367,16 @@ node 8: parent = 4, sibling = 5, degree = 0, depth = 2, height = 0, leaf
             foreach (var node in mynodes)
             {
                 Console.WriteLine($"node {node.nodevalue}: parent = {node.ParentNodeValue()}, sibling = {node.SiblingValue()}, degree = {node.DegreeValue()}, depth = {node.DepthValue()}, height = {node.HeightValue()}, {node.NodeType()}");
+            }
+
+            /*
+             * 트리 순회
+             */
+            foreach (var node in mynodes)
+            {
+                node.Preorder();
+                node.Inorder();
+                node.Postorder();
             }
 
         }
@@ -510,6 +542,94 @@ node 8: parent = 4, sibling = 5, degree = 0, depth = 2, height = 0, leaf
                     childnode.nodelocation = "right";
                     right = childnode;
                     break;
+            }
+        }
+
+        private void NodeVisit(string location, MyNode_Binary _node)
+        {
+
+            switch (location)
+            {
+                case nameof(Preorder):
+                    if (_node != null)
+                    {
+                        if (_node.parentnode != null)
+                        {
+                            Console.Write($" {_node.nodevalue}");
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    NodeVisit(location, _node.left);
+                    NodeVisit(location, _node.right);
+                    break;
+                case nameof(Inorder):
+                    if (_node != null)
+                    {
+                        NodeVisit(location, _node.left);
+                        Console.Write($" {_node.nodevalue}");
+                        //Console.WriteLine(_node.parentnode.nodevalue);
+                        NodeVisit(location, _node.right);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+                case nameof(Postorder):
+                    if (_node != null)
+                    {
+                        NodeVisit(location, _node.left);
+                        NodeVisit(location, _node.right);
+                        Console.Write($" {_node.nodevalue}");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+        //전위순위
+        public void Preorder()
+        {
+            if (this.parentnode == null) // root 노드
+            {
+                Console.WriteLine(nameof(Preorder));
+                Console.Write($" {this.nodevalue}");
+                NodeVisit("Preorder", this.left);
+                NodeVisit("Preorder", this.right);
+                Console.WriteLine();
+            }
+        }
+
+        //중위순위
+        public void Inorder()
+        {
+            if (this.parentnode == null) // root 노드
+            {
+                Console.WriteLine(nameof(Inorder));
+                NodeVisit("Inorder", this.left);
+                Console.Write($" {this.nodevalue}");
+                NodeVisit("Inorder", this.right);
+                Console.WriteLine();
+            }
+        }
+
+
+        //후위순위
+        public void Postorder()
+        {
+            if (this.parentnode == null)
+            {
+                Console.WriteLine(nameof(Postorder));
+                NodeVisit("Postorder", this.left);
+                NodeVisit("Postorder", this.right);
+                Console.Write($" {this.nodevalue}");
+                Console.WriteLine();
+
             }
         }
     }

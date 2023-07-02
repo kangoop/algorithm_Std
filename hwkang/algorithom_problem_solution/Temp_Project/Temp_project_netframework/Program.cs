@@ -59,8 +59,14 @@ namespace Temp_project_netframework
                 {
                     string node_value_idx = node_info[j];
 
+                    if (node_value_idx == string.Empty)
+                    {
+                        return;
+                    }
+
                     if (node_value_idx != "-1")
                     {
+                        
                         MyNode_Binary node;
                         if (mynodes[int.Parse(node_value_idx)] != null)
                         {
@@ -97,11 +103,15 @@ namespace Temp_project_netframework
         {
             foreach (var node in mynodes)
             {
-                Console.WriteLine($"node {node.nodevalue}: parent = {node.ParentNodeValue()}, sibling = {node.SiblingValue()}, degree = {node.DegreeValue()}, depth = {node.DepthValue()}, height = {node.HeightValue()}, {node.NodeType()}");          
+                node.Preorder();
+                node.Inorder();
+                node.Postorder();
             }
             
         }
     }
+
+    
 
     public class MyNode_Binary 
     {
@@ -261,6 +271,95 @@ namespace Temp_project_netframework
                     childnode.nodelocation = "right";
                     right = childnode;
                     break;
+            }
+        }
+
+
+        private void NodeVisit(string location,MyNode_Binary _node)
+        {
+
+            switch (location)
+            {
+                case nameof(Preorder):
+                    if (_node != null)
+                    {
+                        if (_node.parentnode != null)
+                        {
+                            Console.Write($" {_node.nodevalue}");
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    NodeVisit(location,_node.left);
+                    NodeVisit(location,_node.right);
+                    break;
+                case nameof(Inorder):
+                    if (_node != null)
+                    {
+                        NodeVisit(location, _node.left);
+                        Console.Write($" {_node.nodevalue}");
+                        //Console.WriteLine(_node.parentnode.nodevalue);
+                        NodeVisit(location, _node.right);                       
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+                case nameof(Postorder):
+                    if (_node != null)
+                    {
+                        NodeVisit(location, _node.left);
+                        NodeVisit(location, _node.right);
+                        Console.Write($" {_node.nodevalue}");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+        //전위순위
+        public void Preorder()
+        {
+            if (this.parentnode == null) // root 노드
+            {
+                Console.WriteLine(nameof(Preorder));
+                Console.Write($" {this.nodevalue}");
+                NodeVisit("Preorder", this.left);
+                NodeVisit("Preorder", this.right);
+                Console.WriteLine();
+            }
+        }
+
+        //중위순위
+        public void Inorder()
+        {
+            if (this.parentnode == null) // root 노드
+            {
+                Console.WriteLine(nameof(Inorder));
+                NodeVisit("Inorder", this.left);
+                Console.Write($" {this.nodevalue}");
+                NodeVisit("Inorder", this.right);
+                Console.WriteLine();
+            }
+        }
+
+
+        //후위순위
+        public void Postorder()
+        {
+            if (this.parentnode == null)
+            {
+                Console.WriteLine(nameof(Postorder));
+                NodeVisit("Postorder", this.left);
+                NodeVisit("Postorder", this.right);
+                Console.Write($" {this.nodevalue}");
+                Console.WriteLine();
+
             }
         }
     }
