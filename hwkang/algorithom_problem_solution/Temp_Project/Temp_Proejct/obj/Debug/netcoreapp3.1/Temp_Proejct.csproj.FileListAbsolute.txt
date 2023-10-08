@@ -18,7 +18,6 @@ E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_s
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\bin\Debug\netcoreapp3.1\Temp_Proejct.runtimeconfig.dev.json
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\bin\Debug\netcoreapp3.1\Temp_Proejct.dll
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\bin\Debug\netcoreapp3.1\Temp_Proejct.pdb
-E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\obj\Debug\netcoreapp3.1\Temp_Proejct.csproj.AssemblyReference.cache
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\obj\Debug\netcoreapp3.1\Temp_Proejct.GeneratedMSBuildEditorConfig.editorconfig
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\obj\Debug\netcoreapp3.1\Temp_Proejct.AssemblyInfoInputs.cache
 E:\self_dev\알고리즘문제풀기\algorithm_local\hwkang\algorithom_problem_solution\Temp_Project\Temp_Proejct\obj\Debug\netcoreapp3.1\Temp_Proejct.AssemblyInfo.cs

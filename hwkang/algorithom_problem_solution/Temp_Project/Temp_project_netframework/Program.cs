@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
+using System.Linq;
 using System.Security.Principal;
 using System.Text;
 
@@ -24,11 +26,12 @@ namespace Temp_project_netframework
         {
             int node_cnt = InputData_Step();
 
-            MyNode_Binary[] mynodes = new MyNode_Binary[node_cnt];
+            MyNode[] myNodes = new MyNode[100_010];
 
-            Process_Step(node_cnt,mynodes);
+            Process_Step(node_cnt - 1, myNodes);
 
-            OutputData_Step(mynodes);
+            OutputData_Step(myNodes);
+
         }
 
         static int InputData_Step()
@@ -38,329 +41,147 @@ namespace Temp_project_netframework
             return int.Parse(node_cnt);
         }
 
-        static void Process_Step(int node_cnt, MyNode_Binary[] mynodes)
+
+        static void Process_Step(int node_cnt, MyNode[] myNodes)
         {
-            for(int i = 0; i < node_cnt; i++)
+            Dictionary<int, List<int>> link_list = new Dictionary<int, List<int>>();
+            for (int i = 0; i < node_cnt; i++)
             {
-                string[] node_info = Console.ReadLine().Replace(" ", ",").Split(',');
+                string read = Console.ReadLine();
 
-                string node_idx = node_info[0];
+                string[] values = read.Split(' ');
 
-                if (mynodes[int.Parse(node_idx)] == null)
+                int value_first = int.Parse(values[0]);
+
+                int value_second = int.Parse(values[1]);
+
+                if (link_list.ContainsKey(value_first))
                 {
-                    MyNode_Binary node = new MyNode_Binary();
-                    mynodes[int.Parse(node_idx)] = node;
-                    mynodes[int.Parse(node_idx)].nodevalue = node_idx;
+                    link_list[value_first].Add(value_second);
+                }
+                else
+                {
+                    link_list.Add(value_first, new List<int>() { value_second });
                 }
 
-                MyNode_Binary parentnode = mynodes[int.Parse(node_idx)];
-
-                for(int j = 1; j < node_info.Length; j++)
+                if (link_list.ContainsKey(value_second))
                 {
-                    string node_value_idx = node_info[j];
-
-                    if (node_value_idx == string.Empty)
-                    {
-                        return;
-                    }
-
-                    if (node_value_idx != "-1")
-                    {
-                        
-                        MyNode_Binary node;
-                        if (mynodes[int.Parse(node_value_idx)] != null)
-                        {
-                            node = mynodes[int.Parse(node_value_idx)];
-                            node.AddparentNode(parentnode);
-                            node.nodevalue = node_value_idx;
-                        }
-                        else
-                        {
-                            node = new MyNode_Binary();
-                            node.AddparentNode(parentnode);
-                            mynodes[int.Parse(node_value_idx)] = node;
-                            node.nodevalue = node_value_idx;
-                        }
-
-                        if (j == 1) //left
-                        {
-                            parentnode.AddchildNode("left", node);
-                        }
-                        else if(j == 2) //right
-                        {
-                            parentnode.AddchildNode("right", node);
-                        }
-                    }
-                    else // node_value_idx == -1
-                    {
-
-                    }
+                    link_list[value_second].Add(value_first);
                 }
+                else
+                {
+                    link_list.Add(value_second, new List<int>() { value_first });
+                }
+
             }
+
+
+            MakeNode(link_list,1, link_list[1], myNodes);
+
         }
 
-        static void OutputData_Step(MyNode_Binary[] mynodes)
+        static void MakeNode(Dictionary<int,List<int>> link_list, int keyvalue, List<int> values, MyNode[] myNodes)
         {
-            foreach (var node in mynodes)
+
+            if (myNodes[keyvalue] == null)
             {
-                node.Preorder();
-                node.Inorder();
-                node.Postorder();
+                MyNode new_node = new MyNode();
+                new_node.NodeValue = keyvalue.ToString();
+                myNodes[keyvalue] = new_node;
+
+                foreach (var item in values)
+                {
+                    if (myNodes[item] == null)
+                    {
+                        MyNode new_node_child = new MyNode();
+                        new_node_child.NodeValue = item.ToString();
+                        myNodes[item] = new_node_child;
+                        new_node_child.ParentNode = new_node;
+                        new_node.Nodes.Add(new_node_child);
+                    }
+                    else
+                    {
+                        myNodes[item].ParentNode = new_node;
+                        new_node.Nodes.Add(myNodes[item]);
+                    }
+                    if (link_list.ContainsKey(item))
+                    {
+                        MakeNode(link_list, item, link_list[item], myNodes);
+                    }
+                    
+                }
             }
-            
+            else
+            {
+                MyNode contain_node = myNodes[keyvalue];
+
+                foreach (var item in values)
+                {
+                    if (myNodes[item] == null)
+                    {
+                        MyNode new_node_child = new MyNode();
+                        new_node_child.NodeValue = item.ToString();
+                        myNodes[item] = new_node_child;
+                        new_node_child.ParentNode = contain_node;
+                        contain_node.Nodes.Add(new_node_child);
+                        if (link_list.ContainsKey(item))
+                        {
+                            MakeNode(link_list, item, link_list[item], myNodes);
+                        }                       
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    
+                }
+            }
+            link_list.Remove(keyvalue);
+        }
+
+        static void OutputData_Step(MyNode[] mynodes)
+        {
+            StringBuilder sb =new StringBuilder();
+            foreach(var item in mynodes)
+            {
+                
+                if(item != null)
+                {
+                    if (item.NodeValue != "1")
+                    {
+                        sb.AppendLine(item.ParentNode.NodeValue);
+                        //Console.WriteLine(item.ParentNode.NodeValue);
+                    }
+                }
+            }
+
+            Console.Write(sb.ToString());
+
         }
     }
 
     
+    
 
-    public class MyNode_Binary 
+
+    public class MyNode
     {
-        MyNode_Binary parentnode;
-        MyNode_Binary left;
-        MyNode_Binary right;
-        private string nodelocation { get; set; }
-        public string nodevalue { get; set; }
 
 
-        public MyNode_Binary()
+        public List<MyNode> Nodes { get; set; }
+
+        public string NodeValue { get; set; }
+
+        public MyNode ParentNode { get; set; }
+
+        public MyNode()
         {
-            
+            Nodes = new List<MyNode>();
         }
 
-        public string ParentNodeValue()
+        public void AddNode(MyNode node)
         {
-            if (this.parentnode == null)
-            {
-                return "-1";
-            }
-            else
-            {
-                return this.parentnode.nodevalue;
-            }
-        }
-
-        public string SiblingValue()
-        {
-            if(this.parentnode == null)
-            {
-                return "-1";
-            }
-
-
-            if (nodelocation == "left")
-            {
-                if(this.parentnode.right == null)
-                {
-                    return "-1";
-                }
-
-                return this.parentnode.right.nodevalue;
-            }
-            else if(nodelocation=="right") 
-            { //right
-                if (this.parentnode.left == null)
-                {
-                    return "-1";
-                }
-
-                return this.parentnode.left.nodevalue;
-            }
-
-            return "-1";
-        }
-
-        public string DegreeValue()
-        {
-            if(this.right != null && this.left != null)
-            {
-                return "2";
-            }
-            else if (this.right == null && this.left == null)
-            {
-                return "0";
-            }
-            else
-            {
-                return "1";
-            }
-        }
-
-        public string DepthValue()
-        {
-            int node_depth = 0;
-
-            node_depth = DepthFunc(this);
-
-            return node_depth.ToString();
-        }
-
-        private int DepthFunc(MyNode_Binary node)
-        {
-            int depth = 0;
-
-            if (node.parentnode != null)
-            {
-                depth = DepthFunc(node.parentnode);
-
-                depth++;
-            }
-
-            return depth;
-        }
-
-        public string HeightValue()
-        {
-            int node_height = 0;
-
-            node_height = HeightFunc(this);
-
-            return node_height.ToString();
-
-        }
-
-        private int HeightFunc(MyNode_Binary node)
-        {
-            int left_height = 0;
-            int right_height = 0;
-
-            if (node.left != null)
-            {
-                left_height = HeightFunc(node.left);
-                left_height++;
-            }
-
-            if (node.right != null)
-            {
-                right_height = HeightFunc(node.right);
-                right_height++;
-            }
-
-            return left_height > right_height ? left_height : right_height;
-        }
-
-        public string NodeType()
-        {
-            if (this.parentnode == null)
-            {
-                return "root";
-            }
-            else if(this.left == null && this.right == null)
-            {
-                return "leaf";
-            }
-            else
-            {
-                return "internal node";
-            }
-        }
-
-        public void AddparentNode(MyNode_Binary node)
-        {
-            this.parentnode = node;
-        }
-
-        public void AddchildNode(string node_location,MyNode_Binary childnode)
-        {
-            switch (node_location)
-            {
-                case "left":
-                    childnode.nodelocation = "left";
-                    left = childnode;
-                    break;
-                case "right":
-                    childnode.nodelocation = "right";
-                    right = childnode;
-                    break;
-            }
-        }
-
-
-        private void NodeVisit(string location,MyNode_Binary _node)
-        {
-
-            switch (location)
-            {
-                case nameof(Preorder):
-                    if (_node != null)
-                    {
-                        if (_node.parentnode != null)
-                        {
-                            Console.Write($" {_node.nodevalue}");
-                        }
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    NodeVisit(location,_node.left);
-                    NodeVisit(location,_node.right);
-                    break;
-                case nameof(Inorder):
-                    if (_node != null)
-                    {
-                        NodeVisit(location, _node.left);
-                        Console.Write($" {_node.nodevalue}");
-                        //Console.WriteLine(_node.parentnode.nodevalue);
-                        NodeVisit(location, _node.right);                       
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    break;
-                case nameof(Postorder):
-                    if (_node != null)
-                    {
-                        NodeVisit(location, _node.left);
-                        NodeVisit(location, _node.right);
-                        Console.Write($" {_node.nodevalue}");
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    break;
-            }
-        }
-        //전위순위
-        public void Preorder()
-        {
-            if (this.parentnode == null) // root 노드
-            {
-                Console.WriteLine(nameof(Preorder));
-                Console.Write($" {this.nodevalue}");
-                NodeVisit("Preorder", this.left);
-                NodeVisit("Preorder", this.right);
-                Console.WriteLine();
-            }
-        }
-
-        //중위순위
-        public void Inorder()
-        {
-            if (this.parentnode == null) // root 노드
-            {
-                Console.WriteLine(nameof(Inorder));
-                NodeVisit("Inorder", this.left);
-                Console.Write($" {this.nodevalue}");
-                NodeVisit("Inorder", this.right);
-                Console.WriteLine();
-            }
-        }
-
-
-        //후위순위
-        public void Postorder()
-        {
-            if (this.parentnode == null)
-            {
-                Console.WriteLine(nameof(Postorder));
-                NodeVisit("Postorder", this.left);
-                NodeVisit("Postorder", this.right);
-                Console.Write($" {this.nodevalue}");
-                Console.WriteLine();
-
-            }
+            Nodes.Add(node);
         }
     }
  
