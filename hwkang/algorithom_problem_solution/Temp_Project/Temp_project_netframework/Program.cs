@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Principal;
 using System.Text;
 
 namespace Temp_project_netframework
@@ -26,12 +22,7 @@ namespace Temp_project_netframework
         {
             int node_cnt = InputData_Step();
 
-            MyNode[] myNodes = new MyNode[100_010];
-
-            Process_Step(node_cnt - 1, myNodes);
-
-            OutputData_Step(myNodes);
-
+            Process_Step(node_cnt - 1);
         }
 
         static int InputData_Step()
@@ -42,9 +33,16 @@ namespace Temp_project_netframework
         }
 
 
-        static void Process_Step(int node_cnt, MyNode[] myNodes)
+        static void Process_Step(int node_cnt)
         {
-            Dictionary<int, List<int>> link_list = new Dictionary<int, List<int>>();
+
+            List<int>[] nodes = new List<int>[50001];
+            Queue<int> queue = new Queue<int>(); //BFS 탐색을 위한 추가 
+
+            bool[] check = new bool[50001]; //방문여부
+            int[] parents = new int[50001]; //부모노드의 정보
+            int[] depth = new   int[50001]; //노드의 깊이 
+
             for (int i = 0; i < node_cnt; i++)
             {
                 string read = Console.ReadLine();
@@ -55,134 +53,97 @@ namespace Temp_project_netframework
 
                 int value_second = int.Parse(values[1]);
 
-                if (link_list.ContainsKey(value_first))
+                if (nodes[value_first] == null)
                 {
-                    link_list[value_first].Add(value_second);
+                    nodes[value_first] = new List<int>() { value_second };
                 }
                 else
                 {
-                    link_list.Add(value_first, new List<int>() { value_second });
+                    nodes[value_first].Add(value_second);
                 }
 
-                if (link_list.ContainsKey(value_second))
+                if (nodes[value_second] == null)
                 {
-                    link_list[value_second].Add(value_first);
+                    nodes[value_second]=new List<int>() { value_first };
                 }
                 else
                 {
-                    link_list.Add(value_second, new List<int>() { value_first });
+                    nodes[value_second].Add(value_first);
                 }
 
             }
 
+            check[1] = true;
+            queue.Enqueue(1);
 
-            MakeNode(link_list,1, link_list[1], myNodes);
-
-        }
-
-        static void MakeNode(Dictionary<int,List<int>> link_list, int keyvalue, List<int> values, MyNode[] myNodes)
-        {
-
-            if (myNodes[keyvalue] == null)
+            while (queue.Count > 0)
             {
-                MyNode new_node = new MyNode();
-                new_node.NodeValue = keyvalue.ToString();
-                myNodes[keyvalue] = new_node;
+                int x = queue.Dequeue();
 
-                foreach (var item in values)
+                for(int i = 0; i < nodes[x].Count; i++)
                 {
-                    if (myNodes[item] == null)
+                    int key_value_index = nodes[x][i];
+
+                    if (!check[key_value_index])
                     {
-                        MyNode new_node_child = new MyNode();
-                        new_node_child.NodeValue = item.ToString();
-                        myNodes[item] = new_node_child;
-                        new_node_child.ParentNode = new_node;
-                        new_node.Nodes.Add(new_node_child);
+                        depth[key_value_index] = depth[x] + 1;
+                        check[key_value_index] = true;
+                        parents[key_value_index] = x;
+                        queue.Enqueue(key_value_index);
                     }
-                    else
-                    {
-                        myNodes[item].ParentNode = new_node;
-                        new_node.Nodes.Add(myNodes[item]);
-                    }
-                    if (link_list.ContainsKey(item))
-                    {
-                        MakeNode(link_list, item, link_list[item], myNodes);
-                    }
-                    
                 }
             }
-            else
+
+            int parentnode_cnt = InputData_Step();
+
+            StringBuilder sb= new   StringBuilder();
+
+            for (int i = 0; i < parentnode_cnt; i++)
             {
-                MyNode contain_node = myNodes[keyvalue];
+                string read = Console.ReadLine();
 
-                foreach (var item in values)
+                if (string.IsNullOrEmpty(read))
                 {
-                    if (myNodes[item] == null)
-                    {
-                        MyNode new_node_child = new MyNode();
-                        new_node_child.NodeValue = item.ToString();
-                        myNodes[item] = new_node_child;
-                        new_node_child.ParentNode = contain_node;
-                        contain_node.Nodes.Add(new_node_child);
-                        if (link_list.ContainsKey(item))
-                        {
-                            MakeNode(link_list, item, link_list[item], myNodes);
-                        }                       
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    
+                    break;
                 }
-            }
-            link_list.Remove(keyvalue);
-        }
 
-        static void OutputData_Step(MyNode[] mynodes)
-        {
-            StringBuilder sb =new StringBuilder();
-            foreach(var item in mynodes)
+                string[] values = read.Split(' ');
+
+                int value_first = int.Parse(values[0]);
+
+                int value_second = int.Parse(values[1]);
+                sb.AppendLine(LCA(value_first, value_second));
+            }
+
+
+            Console.WriteLine(sb.ToString());
+
+            string LCA(int x ,int y)
             {
-                
-                if(item != null)
+                // y 를 더깊은 노드 세팅 
+                if (depth[x] > depth[y])
                 {
-                    if (item.NodeValue != "1")
-                    {
-                        sb.AppendLine(item.ParentNode.NodeValue);
-                        //Console.WriteLine(item.ParentNode.NodeValue);
-                    }
+                    int temp = x;
+                    x = y;
+                    y = temp;
                 }
+
+                // 노드가 동일한 깊이가 될때까지 올라가기 
+                while (depth[x] != depth[y])
+                {
+                    y = parents[y];
+                }
+
+                //두 노드가 같아질떄까지 위로 올라가기 
+                while (x != y)
+                {
+                    x = parents[x];
+                    y = parents[y];
+                }
+
+                // 최소 공통 조상 리턴 
+                return x.ToString();
             }
-
-            Console.Write(sb.ToString());
-
-        }
+        }     
     }
-
-    
-    
-
-
-    public class MyNode
-    {
-
-
-        public List<MyNode> Nodes { get; set; }
-
-        public string NodeValue { get; set; }
-
-        public MyNode ParentNode { get; set; }
-
-        public MyNode()
-        {
-            Nodes = new List<MyNode>();
-        }
-
-        public void AddNode(MyNode node)
-        {
-            Nodes.Add(node);
-        }
-    }
- 
 }

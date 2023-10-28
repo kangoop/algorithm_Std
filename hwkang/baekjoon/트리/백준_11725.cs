@@ -135,7 +135,13 @@ namespace Temp_project_netframework
             MakeNode(link_list,1, link_list[1], myNodes);
 
         }
-
+        /// <summary>
+        /// DFS 방식의 트리 조회 로 트리 만들기 
+        /// </summary>
+        /// <param name="link_list"></param>
+        /// <param name="keyvalue"></param>
+        /// <param name="values"></param>
+        /// <param name="myNodes"></param>
         static void MakeNode(Dictionary<int,List<int>> link_list, int keyvalue, List<int> values, MyNode[] myNodes)
         {
 
