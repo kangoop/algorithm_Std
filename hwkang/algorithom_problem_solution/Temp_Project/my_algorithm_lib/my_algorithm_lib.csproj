@@ -4,4 +4,20 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="자료구조_DataStructure\ALDS1_3_A_스택.cs" />
+    <Compile Remove="자료구조_DataStructure\ALDS1_3_B_큐.cs" />
+    <Compile Remove="자료구조_DataStructure\ALDS_1_3_C_연결리스트.cs" />
+    <Compile Remove="재귀와분할정복\ALDS1_5_A.cs" />
+    <Compile Remove="재귀와분할정복\재귀와분할정복_ALDS1_5_A.cs" />
+    <Compile Remove="정렬_sort\버블정렬.cs" />
+    <Compile Remove="정렬_sort\삽입정렬.cs" />
+    <Compile Remove="정렬_sort\선택정렬.cs" />
+    <Compile Remove="정렬_sort\안정된정렬.cs" />
+    <Compile Remove="탐색_Search\ALDS1_4_A_선형탐색.cs" />
+    <Compile Remove="탐색_Search\ALDS1_4_B_이진탐색.cs" />
+    <Compile Remove="탐색_Search\ALDS1_4_B_이진탐색_책해답.cs" />
+    <Compile Remove="탐색_Search\ALDS1_4_C_해시테이블.cs" />
+  </ItemGroup>
+
 </Project>

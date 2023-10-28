@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temp_project_netframework",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "my_algorithm_lib", "my_algorithm_lib\my_algorithm_lib.csproj", "{42A98CA1-9D74-4D64-8245-D28BD710A4E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{B089DA1A-E576-43F6-92C0-CC119F8DB9ED}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{42A98CA1-9D74-4D64-8245-D28BD710A4E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42A98CA1-9D74-4D64-8245-D28BD710A4E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42A98CA1-9D74-4D64-8245-D28BD710A4E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B089DA1A-E576-43F6-92C0-CC119F8DB9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B089DA1A-E576-43F6-92C0-CC119F8DB9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B089DA1A-E576-43F6-92C0-CC119F8DB9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B089DA1A-E576-43F6-92C0-CC119F8DB9ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
